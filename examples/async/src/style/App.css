@@ -27,3 +27,11 @@ li {
 #root select {
     width: 200px;
 }
+
+#root li .time {
+    margin-left: 20px;
+}
+
+#root li .top {
+    color: green;
+}
