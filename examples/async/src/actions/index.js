@@ -1,39 +1,39 @@
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const SELECT_REDDIT = 'SELECT_REDDIT'
-export const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT'
+export const SELECT_TOPIC = 'SELECT_TOPIC'
+export const INVALIDATE_TOPIC = 'INVALIDATE_TOPIC'
 
-export const selectReddit = reddit => ({
-  type: SELECT_REDDIT,
-  reddit
+export const selectTopic = topic => ({
+  type: SELECT_TOPIC,
+  topic
 })
 
-export const invalidateReddit = reddit => ({
-  type: INVALIDATE_REDDIT,
-  reddit
+export const invalidateTopic = topic => ({
+  type: INVALIDATE_TOPIC,
+  topic
 })
 
-export const requestPosts = reddit => ({
+export const requestPosts = topic => ({
   type: REQUEST_POSTS,
-  reddit
+  topic
 })
 
-export const receivePosts = (reddit, json) => ({
+export const receivePosts = (topic, json) => ({
   type: RECEIVE_POSTS,
-  reddit,
-  posts: json.data.children.map(child => child.data),
+  topic,
+  posts: json.data.map(child => child),
   receivedAt: Date.now()
 })
 
-const fetchPosts = reddit => dispatch => {
-  dispatch(requestPosts(reddit))
-  return fetch(`https://www.reddit.com/r/${reddit}.json`)
+const fetchPosts = topic => dispatch => {
+  dispatch(requestPosts(topic))
+  return fetch(`https://cnodejs.org/api/v1/topics?tab=${topic}`)
     .then(response => response.json())
-    .then(json => dispatch(receivePosts(reddit, json)))
+    .then(json => dispatch(receivePosts(topic, json)))
 }
 
-const shouldFetchPosts = (state, reddit) => {
-  const posts = state.postsByReddit[reddit]
+const shouldFetchPosts = (state, topic) => {
+  const posts = state.postsByTopic[topic]
   if (!posts) {
     return true
   }
@@ -43,8 +43,8 @@ const shouldFetchPosts = (state, reddit) => {
   return posts.didInvalidate
 }
 
-export const fetchPostsIfNeeded = reddit => (dispatch, getState) => {
-  if (shouldFetchPosts(getState(), reddit)) {
-    return dispatch(fetchPosts(reddit))
+export const fetchPostsIfNeeded = topic => (dispatch, getState) => {
+  if (shouldFetchPosts(getState(), topic)) {
+    return dispatch(fetchPosts(topic))
   }
 }

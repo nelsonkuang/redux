@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { selectReddit, fetchPostsIfNeeded, invalidateReddit } from '../actions'
+import { selectTopic, fetchPostsIfNeeded, invalidateTopic } from '../actions'
 import Picker from '../components/Picker'
 import Posts from '../components/Posts'
 
 class App extends Component {
   static propTypes = {
-    selectedReddit: PropTypes.string.isRequired,
+    selectedTopic: PropTypes.string.isRequired,
     posts: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,
     lastUpdated: PropTypes.number,
@@ -15,52 +15,55 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, selectedReddit } = this.props
-    dispatch(fetchPostsIfNeeded(selectedReddit))
+    const { dispatch, selectedTopic } = this.props
+    dispatch(fetchPostsIfNeeded(selectedTopic))
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedReddit !== this.props.selectedReddit) {
-      const { dispatch, selectedReddit } = nextProps
-      dispatch(fetchPostsIfNeeded(selectedReddit))
+    if (nextProps.selectedTopic !== this.props.selectedTopic) {
+      const { dispatch, selectedTopic } = nextProps
+      dispatch(fetchPostsIfNeeded(selectedTopic))
     }
   }
 
-  handleChange = nextReddit => {
-    this.props.dispatch(selectReddit(nextReddit))
+  handleChange = nextTopic => {
+    this.props.dispatch(selectTopic(nextTopic))
   }
 
   handleRefreshClick = e => {
     e.preventDefault()
 
-    const { dispatch, selectedReddit } = this.props
-    dispatch(invalidateReddit(selectedReddit))
-    dispatch(fetchPostsIfNeeded(selectedReddit))
+    const { dispatch, selectedTopic } = this.props
+    dispatch(invalidateTopic(selectedTopic))
+    dispatch(fetchPostsIfNeeded(selectedTopic))
   }
 
   render() {
-    const { selectedReddit, posts, isFetching, lastUpdated } = this.props
+    const { selectedTopic, posts, isFetching, lastUpdated } = this.props
     const isEmpty = posts.length === 0
+    const optionsArr = [ {value:'ask',name:'问答'}, {value:'share',name:'分享'}, {value:'job',name:'招聘'}, {value:'good',name:'精华'} ]
+    const selectedTopicName = 'CNode 社区 ' + (optionsArr.find(option => option.value === selectedTopic)).name + ' 板块'
     return (
       <div>
-        <Picker value={selectedReddit}
+        <Picker value={selectedTopic}
+                name={selectedTopicName}
                 onChange={this.handleChange}
-                options={[ 'reactjs', 'frontend' ]} />
+                options={optionsArr} />
         <p>
           {lastUpdated &&
             <span>
-              Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
+              上一次的更新时间： {new Date(lastUpdated).toLocaleTimeString()}.
               {' '}
             </span>
           }
           {!isFetching &&
             <button onClick={this.handleRefreshClick}>
-              Refresh
+              刷新
             </button>
           }
         </p>
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+          ? (isFetching ? <h2>加载中...</h2> : <h2>空。</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
               <Posts posts={posts} />
             </div>
@@ -71,18 +74,18 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  const { selectedReddit, postsByReddit } = state
+  const { selectedTopic, postsByTopic } = state
   const {
     isFetching,
     lastUpdated,
     items: posts
-  } = postsByReddit[selectedReddit] || {
+  } = postsByTopic[selectedTopic] || {
     isFetching: true,
     items: []
   }
 
   return {
-    selectedReddit,
+    selectedTopic,
     posts,
     isFetching,
     lastUpdated

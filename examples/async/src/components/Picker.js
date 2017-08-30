@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Picker = ({ value, onChange, options }) => (
+const Picker = ({ value, name, onChange, options }) => (
   <span>
-    <h1>{value}</h1>
+    <h1>{name}</h1>
     <select onChange={e => onChange(e.target.value)}
             value={value}>
       {options.map(option =>
-        <option value={option} key={option}>
-          {option}
+        <option value={option.value} key={option.value}>
+          {option.name}
         </option>)
       }
     </select>
@@ -16,10 +16,12 @@ const Picker = ({ value, onChange, options }) => (
 )
 
 Picker.propTypes = {
-  options: PropTypes.arrayOf(
-    PropTypes.string.isRequired
-  ).isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value:PropTypes.string.isRequired,
+    name:PropTypes.string.isRequired
+  }).isRequired).isRequired,
   value: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 }
 

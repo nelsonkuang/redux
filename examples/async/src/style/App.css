@@ -1,0 +1,29 @@
+ul,
+li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#root {
+    padding: 30px;
+}
+
+#root li {
+    display: block;
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 20px;
+}
+
+#root li img {
+    vertical-align: top;
+    margin-right: 20px;
+}
+
+#root select {
+    width: 200px;
+}
