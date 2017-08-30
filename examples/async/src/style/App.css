@@ -35,3 +35,7 @@ li {
 #root li .top {
     color: green;
 }
+
+#root li a {
+    text-decoration: none;
+}

@@ -7,7 +7,7 @@ const Posts = ({posts}) => (
     	<li key={i}>
     		{post.author.avatar_url && <img src={post.author.avatar_url} style={{width:'50px',height:'50px',borderRadius:'50%'}} />}
     		{post.top && <span className="top">[置顶]</span>}
-    		{post.title}
+    		<a href={'https://cnodejs.org/topic/' + post.id} target="_blank">{post.title}</a>
     		<span className="time">{new Date(post.create_at).toLocaleDateString() + ' ' + new Date(post.create_at).toLocaleTimeString()}</span>
     	</li>
     )}
