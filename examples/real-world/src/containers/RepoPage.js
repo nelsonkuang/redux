@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loadRepo, loadStargazers } from '../actions'
-import Repo from '../components/Repo'
+import StarredRepo from '../components/StarredRepo'
 import User from '../components/User'
 import List from '../components/List'
 
@@ -47,19 +47,20 @@ class RepoPage extends Component {
   render() {
     const { repo, owner, name } = this.props
     if (!repo || !owner) {
-      return <h1><i>Loading {name} details...</i></h1>
+      return <h1><i>正在加载 {name} 详细...</i></h1>
     }
 
     const { stargazers, stargazersPagination } = this.props
     return (
       <div>
-        <Repo repo={repo}
+        <StarredRepo repo={repo}
               owner={owner} />
         <hr />
+        <h2>项目 {name} 的关注者如下：</h2>
         <List renderItem={this.renderUser}
               items={stargazers}
               onLoadMoreClick={this.handleLoadMoreClick}
-              loadingLabel={`Loading stargazers of ${name}...`}
+              loadingLabel={`正在加载 ${name} 的关注者...`}
               {...stargazersPagination} />
       </div>
     )

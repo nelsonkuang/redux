@@ -50,6 +50,37 @@ export const loadRepo = (fullName, requiredFields = []) => (dispatch, getState) 
   return dispatch(fetchRepo(fullName))
 }
 
+export const OWN_REQUEST = 'OWN_REQUEST'
+export const OWN_SUCCESS = 'OWN_SUCCESS'
+export const OWN_FAILURE = 'OWN_FAILURE'
+
+// Fetches a page of starred repos by a particular user.
+// Relies on the custom API middleware defined in ../middleware/api.js.
+const fetchOwn = (login, nextPageUrl) => ({
+  login,
+  [CALL_API]: {
+    types: [ OWN_REQUEST, OWN_SUCCESS, OWN_FAILURE ],
+    endpoint: nextPageUrl,
+    schema: Schemas.REPO_ARRAY
+  }
+})
+
+// Fetches a page of starred repos by a particular user.
+// Bails out if page is cached and user didn't specifically request next page.
+// Relies on Redux Thunk middleware.
+export const loadOwn = (login, nextPage) => (dispatch, getState) => {
+  const {
+    nextPageUrl = `users/${login}/repos`,
+    pageCount = 0
+  } = getState().pagination.ownedByUser[login] || {}
+
+  if (pageCount > 0 && !nextPage) {
+    return null
+  }
+
+  return dispatch(fetchOwn(login, nextPageUrl))
+}
+
 export const STARRED_REQUEST = 'STARRED_REQUEST'
 export const STARRED_SUCCESS = 'STARRED_SUCCESS'
 export const STARRED_FAILURE = 'STARRED_FAILURE'

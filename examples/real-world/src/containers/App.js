@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router'
+import { hashHistory } from 'react-router'
 import Explore from '../components/Explore'
 import { resetErrorMessage } from '../actions'
 
@@ -23,7 +23,7 @@ class App extends Component {
   }
 
   handleChange = nextValue => {
-    browserHistory.push(`/${nextValue}`)
+    hashHistory.push(`/${nextValue}`)
   }
 
   renderErrorMessage() {

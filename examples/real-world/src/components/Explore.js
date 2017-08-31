@@ -41,19 +41,19 @@ export default class Explore extends Component {
   render() {
     return (
       <div>
-        <p>Type a username or repo full name and hit 'Go':</p>
+        <p>输入 用户名 或者 github项目全名，然后点击 “确定”:</p>
         <input size="45"
                ref={(input) => this.input = input}
                defaultValue={this.props.value}
                onKeyUp={this.handleKeyUp} />
         <button onClick={this.handleGoClick}>
-          Go!
+          确定
         </button>
         <p>
-          Code on <a href={GITHUB_REPO} target="_blank" rel="noopener noreferrer">Github</a>.
+          代码在 <a href={GITHUB_REPO} target="_blank" rel="noopener noreferrer">Github</a>.
         </p>
         <p>
-          Move the DevTools with Ctrl+W or hide them with Ctrl+H.
+          如果要移动开发工具可以按 Ctrl+W 或者 按 Ctrl+H 来隐藏它
         </p>
       </div>
     )

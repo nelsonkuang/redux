@@ -36,6 +36,14 @@ const pagination = combineReducers({
       ActionTypes.STARRED_FAILURE
     ]
   }),
+  ownedByUser: paginate({
+    mapActionToKey: action => action.login,
+    types: [
+      ActionTypes.OWN_REQUEST,
+      ActionTypes.OWN_SUCCESS,
+      ActionTypes.OWN_FAILURE
+    ]
+  }),
   stargazersByRepo: paginate({
     mapActionToKey: action => action.fullName,
     types: [
