@@ -1,4 +1,4 @@
-# 真实世界的项目，用户页增加个人项目模块及显示优化 Redux Real World Example
+# Redux 真实世界的项目，用户页增加个人项目模块及显示优化 Redux Real World Example
 
 [在线 Demo](http://www.iampua.com/pui/real-world.html)   
    
