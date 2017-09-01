@@ -47,7 +47,7 @@ export default class List extends Component {
     }
 
     return (
-      <div>
+      <div style={{paddingBottom:'30px'}}>
         {items.map(renderItem)}
         {pageCount > 0 && !isLastPage && this.renderLoadMore()}
       </div>
