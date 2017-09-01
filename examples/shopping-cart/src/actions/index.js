@@ -23,6 +23,17 @@ export const addToCart = productId => (dispatch, getState) => {
   }
 }
 
+const decreaseToCartUnsafe = productId => ({
+  type: types.DECREASE_TO_CART,
+  productId
+})
+
+export const decreaseToCart = productId => (dispatch, getState) => {
+  if (getState().products.byId[productId].quantity > 0) {
+    dispatch(decreaseToCartUnsafe(productId))
+  }
+}
+
 export const checkout = products => (dispatch, getState) => {
   const { cart } = getState()
 

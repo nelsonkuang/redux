@@ -1,17 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { addToCart } from '../actions'
+import { addToCart, decreaseToCart } from '../actions'
 import { getVisibleProducts } from '../reducers/products'
 import ProductItem from '../components/ProductItem'
 import ProductsList from '../components/ProductsList'
 
-const ProductsContainer = ({ products, addToCart }) => (
-  <ProductsList title="Products">
+const ProductsContainer = ({ products, addToCart, decreaseToCart }) => (
+  <ProductsList title="商品列表">
     {products.map(product =>
       <ProductItem
         key={product.id}
         product={product}
+        onDecreaseToCartClicked={() => decreaseToCart(product.id)}
         onAddToCartClicked={() => addToCart(product.id)} />
     )}
   </ProductsList>
@@ -22,9 +23,11 @@ ProductsContainer.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    inventory: PropTypes.number.isRequired
+    inventory: PropTypes.number.isRequired,
+    quantity: PropTypes.number
   })).isRequired,
-  addToCart: PropTypes.func.isRequired
+  addToCart: PropTypes.func.isRequired,
+  decreaseToCart: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -33,5 +36,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addToCart }
+  { addToCart, decreaseToCart }
 )(ProductsContainer)

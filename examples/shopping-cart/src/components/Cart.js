@@ -5,7 +5,7 @@ import Product from './Product'
 const Cart  = ({ products, total, onCheckoutClicked }) => {
   const hasProducts = products.length > 0
   const nodes = hasProducts ? (
-    products.map(product =>
+    products.filter(product => product.quantity).map(product =>
       <Product
         title={product.title}
         price={product.price}
@@ -14,17 +14,16 @@ const Cart  = ({ products, total, onCheckoutClicked }) => {
       />
     )
   ) : (
-    <em>Please add some products to cart.</em>
+    <em>请添加一些商品到购物车</em>
   )
 
   return (
     <div>
-      <h3>Your Cart</h3>
       <div>{nodes}</div>
-      <p>Total: &#36;{total}</p>
+      <p>总共: &#36;{total}</p>
       <button onClick={onCheckoutClicked}
         disabled={hasProducts ? '' : 'disabled'}>
-        Checkout
+        去付款
       </button>
     </div>
   )
