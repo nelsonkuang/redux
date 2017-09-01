@@ -54,7 +54,7 @@ export const OWN_REQUEST = 'OWN_REQUEST'
 export const OWN_SUCCESS = 'OWN_SUCCESS'
 export const OWN_FAILURE = 'OWN_FAILURE'
 
-// Fetches a page of starred repos by a particular user.
+// Fetches a page of user's own repos by a particular user.
 // Relies on the custom API middleware defined in ../middleware/api.js.
 const fetchOwn = (login, nextPageUrl) => ({
   login,
@@ -65,7 +65,7 @@ const fetchOwn = (login, nextPageUrl) => ({
   }
 })
 
-// Fetches a page of starred repos by a particular user.
+// Fetches a page of user's own repos by a particular user.
 // Bails out if page is cached and user didn't specifically request next page.
 // Relies on Redux Thunk middleware.
 export const loadOwn = (login, nextPage) => (dispatch, getState) => {
