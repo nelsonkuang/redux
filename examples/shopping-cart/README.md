@@ -1,4 +1,6 @@
-# Redux Shopping Cart Example
+# Redux购物车例子 Redux Shopping Cart Example
+
+已修改成国人使用习惯的购物车   
 
 This project template was built with [Create React App](https://github.com/facebookincubator/create-react-app), which provides a simple way to start React projects with no build configuration needed.
 
