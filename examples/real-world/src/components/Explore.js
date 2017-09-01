@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-const GITHUB_REPO = 'https://github.com/reactjs/redux'
+const GITHUB_REPO = 'https://github.com/nelsonkuang/redux/tree/master/examples/real-world'
 
 export default class Explore extends Component {
   static propTypes = {

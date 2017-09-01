@@ -76,19 +76,22 @@ class UserPage extends Component {
       <div>
         <User user={user} />
         <hr />
-        <h2>{login} 的个人项目如下：</h2>
-        <List renderItem={this.renderOwnRepo}
-              items={zip(ownRepos, ownRepoOwners)}
-              onLoadMoreClick={this.handleLoadMoreOwnRepoClick}
-              loadingLabel={`正在加载 ${login}的个人项目...`}
-              {...ownPagination} />
-        <hr />
-        <h2>{login} 关注的项目如下：</h2>
-        <List renderItem={this.renderStarredRepo}
-              items={zip(starredRepos, starredRepoOwners)}
-              onLoadMoreClick={this.handleLoadMoreStarredRepoClick}
-              loadingLabel={`正在加载 ${login}关注的项目...`}
-              {...starredPagination} />
+        <div style={{width:'50%',float:'left'}}>
+          <h2>{login} 的个人项目如下：</h2>
+          <List renderItem={this.renderOwnRepo}
+                items={zip(ownRepos, ownRepoOwners)}
+                onLoadMoreClick={this.handleLoadMoreOwnRepoClick}
+                loadingLabel={`正在加载 ${login}的个人项目...`}
+                {...ownPagination} />
+        </div>
+        <div style={{width:'50%',float:'left'}}>
+          <h2>{login} 关注的项目如下：</h2>
+          <List renderItem={this.renderStarredRepo}
+                items={zip(starredRepos, starredRepoOwners)}
+                onLoadMoreClick={this.handleLoadMoreStarredRepoClick}
+                loadingLabel={`正在加载 ${login}关注的项目...`}
+                {...starredPagination} />
+        </div>
       </div>
     )
   }

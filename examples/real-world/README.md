@@ -1,5 +1,7 @@
-# Redux Real World Example
+# 真实世界的项目，用户页增加个人项目模块及显示优化 Redux Real World Example
 
+[在线 Demo](http://www.iampua.com/pui/real-world.html)   
+   
 This project template was built with [Create React App](https://github.com/facebookincubator/create-react-app), which provides a simple way to start React projects with no build configuration needed.
 
 Projects built with Create-React-App include support for ES6 syntax, as well as several unofficial / not-yet-final forms of Javascript syntax such as Class Properties and JSX.  See the list of [language features and polyfills supported by Create-React-App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#supported-language-features-and-polyfills) for more information.
