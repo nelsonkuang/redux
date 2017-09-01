@@ -6,7 +6,7 @@ const User = ({ user }) => {
   const { login, avatarUrl, name, blog, location } = user
 
   return (
-    <div className="User">
+    <div className="User" style={{float:'left', marginRight:'20px', paddingBottom:'20px'}}>
       <Link to={`/${login}`}>
         <img src={avatarUrl} alt={login} width="72" height="72" style={{borderRadius:'50%'}}/>
         <h3 style={{paddingTop:0,marginTop:0}}>

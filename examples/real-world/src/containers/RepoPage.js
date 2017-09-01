@@ -41,6 +41,8 @@ class RepoPage extends Component {
   }
 
   renderUser(user) {
+    user.blog = null;
+    user.location = null;
     return <User user={user} key={user.login} />
   }
 
@@ -55,7 +57,7 @@ class RepoPage extends Component {
       <div>
         <StarredRepo repo={repo}
               owner={owner} />
-        <hr />
+        <hr style={{clear:'both'}}/>
         <h2>项目 {name} 的关注者如下：</h2>
         <List renderItem={this.renderUser}
               items={stargazers}

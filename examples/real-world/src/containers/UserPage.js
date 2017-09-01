@@ -75,7 +75,7 @@ class UserPage extends Component {
     return (
       <div>
         <User user={user} />
-        <hr />
+        <hr style={{clear:'both'}}/>
         <div style={{width:'50%',float:'left'}}>
           <h2>{login} 的个人项目如下：</h2>
           <List renderItem={this.renderOwnRepo}
