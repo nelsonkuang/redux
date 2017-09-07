@@ -1,6 +1,8 @@
 # Redux 异步操作例子 - 按话题列出CNODE社区的贴子 Redux Async Example
 
 [在线 Demo](http://www.iampua.com/pui/async.html)   
+
+用redux-saga来管理异步请求，并移除redux-thunk，代码非常清晰，让action文件变得非常纯，里面都是纯函数，没有一点点异步操作   
    
 This project template was built with [Create React App](https://github.com/facebookincubator/create-react-app), which provides a simple way to start React projects with no build configuration needed.
 
