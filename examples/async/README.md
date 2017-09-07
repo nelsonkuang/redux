@@ -4,6 +4,8 @@
 
 用redux-saga来管理异步请求，并移除redux-thunk，代码非常清晰，让action文件变得非常纯，里面都是纯函数，没有一点点异步操作   
    
+参考引用自：https://github.com/redux-saga/redux-saga/tree/master/examples/async   
+   
 This project template was built with [Create React App](https://github.com/facebookincubator/create-react-app), which provides a simple way to start React projects with no build configuration needed.
 
 Projects built with Create-React-App include support for ES6 syntax, as well as several unofficial / not-yet-final forms of Javascript syntax such as Class Properties and JSX.  See the list of [language features and polyfills supported by Create-React-App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#supported-language-features-and-polyfills) for more information.
