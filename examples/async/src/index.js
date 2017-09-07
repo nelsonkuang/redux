@@ -1,22 +1,22 @@
+import "babel-polyfill"
 import React from 'react'
 import { render } from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
-import { createLogger } from 'redux-logger'
+import createSagaMiddleware from 'redux-saga'
 import reducer from './reducers'
+import mySaga from './sagas'
 import App from './containers/App'
 import './style/App.css'
 
-const middleware = [ thunk ]
-if (process.env.NODE_ENV !== 'production') {
-  middleware.push(createLogger())
-}
+const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
   reducer,
-  applyMiddleware(...middleware)
+  applyMiddleware(sagaMiddleware)
 )
+
+sagaMiddleware.run(mySaga)
 
 render(
   <Provider store={store}>

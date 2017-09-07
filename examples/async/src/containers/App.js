@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { selectTopic, fetchPostsIfNeeded, invalidateTopic } from '../actions'
+import { selectTopic, invalidateTopic } from '../actions'
 import Picker from '../components/Picker'
 import Posts from '../components/Posts'
 
@@ -14,16 +14,10 @@ class App extends Component {
     dispatch: PropTypes.func.isRequired
   }
 
-  componentDidMount() {
-    const { dispatch, selectedTopic } = this.props
-    dispatch(fetchPostsIfNeeded(selectedTopic))
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedTopic !== this.props.selectedTopic) {
-      const { dispatch, selectedTopic } = nextProps
-      dispatch(fetchPostsIfNeeded(selectedTopic))
-    }
+  constructor(props) {
+    super(props)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleRefreshClick = this.handleRefreshClick.bind(this)
   }
 
   handleChange = nextTopic => {
@@ -32,10 +26,8 @@ class App extends Component {
 
   handleRefreshClick = e => {
     e.preventDefault()
-
     const { dispatch, selectedTopic } = this.props
     dispatch(invalidateTopic(selectedTopic))
-    dispatch(fetchPostsIfNeeded(selectedTopic))
   }
 
   render() {
