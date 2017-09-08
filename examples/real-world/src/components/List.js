@@ -22,7 +22,7 @@ export default class List extends Component {
   renderLoadMore() {
     const { isFetching, onLoadMoreClick } = this.props
     return (
-      <button style={{ fontSize: '150%' }}
+      <button style={{ fontSize: '150%', display: 'block', float: 'left', clear: 'both' }}
               onClick={onLoadMoreClick}
               disabled={isFetching}>
         {isFetching ? '加载中...' : '加载更多'}

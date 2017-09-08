@@ -2,14 +2,14 @@ import union from 'lodash/union'
 
 // Creates a reducer managing pagination, given the action types to handle,
 // and a function telling how to extract the key from an action.
-const paginate = ({ types, mapActionToKey }) => {
-  if (!Array.isArray(types) || types.length !== 3) {
+const paginate = ({ types, mapActionToKey }) => { // 由options对象里面只取types和mapActionTokey两个属性值
+  if (!Array.isArray(types) || types.length !== 3) { // types必需是有请求中、成功、失败三个常数值
     throw new Error('Expected types to be an array of three elements.')
   }
   if (!types.every(t => typeof t === 'string')) {
     throw new Error('Expected types to be strings.')
   }
-  if (typeof mapActionToKey !== 'function') {
+  if (typeof mapActionToKey !== 'function') { // mapActionTokey必需是作为一个函数传入
     throw new Error('Expected mapActionToKey to be a function.')
   }
 
@@ -45,7 +45,7 @@ const paginate = ({ types, mapActionToKey }) => {
     }
   }
 
-  return (state = {}, action) => {
+  return (state = {}, action) => { // 返回的是一个正常reducer的格式
     // Update pagination by key
     switch (action.type) {
       case requestType:
@@ -57,7 +57,7 @@ const paginate = ({ types, mapActionToKey }) => {
         }
         return {
           ...state,
-          [key]: updatePagination(state[key], action)
+          [key]: updatePagination(state[key], action)　// reducer的三种type都放到了updatePagination函数里面处理
         }
       default:
         return state

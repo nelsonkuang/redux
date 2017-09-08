@@ -77,7 +77,7 @@ export const CALL_API = 'Call API'
 
 // A Redux middleware that interprets actions with CALL_API info specified.
 // Performs the call and promises when such actions are dispatched.
-export default store => next => action => {
+export default store => next => action => { // 自己封装中间件主要是把action去壳，由{[CALL_API]: {}}格式替换为正常的action{type:xxxx,endpoint:xxx,schema:xxxx}格式
   const callAPI = action[CALL_API]
   if (typeof callAPI === 'undefined') {
     return next(action)
@@ -103,21 +103,21 @@ export default store => next => action => {
     throw new Error('Expected action types to be strings.')
   }
 
-  const actionWith = data => {
+  const actionWith = data => { // 把action由{[CALL_API]: {}}格式替换为正常的action{type:xxxx,endpoint:xxx,schema:xxxx}格式
     const finalAction = Object.assign({}, action, data)
     delete finalAction[CALL_API]
     return finalAction
   }
 
   const [ requestType, successType, failureType ] = types
-  next(actionWith({ type: requestType }))
+  next(actionWith({ type: requestType })) // 分发请求action USER_REQUEST / REPO_REQUEST / OWN_REQUEST / STARGAZERS_REQUEST
 
   return callApi(endpoint, schema).then(
-    response => next(actionWith({
+    response => next(actionWith({ // 分发成功action USER_SUCCESS / REPO_SUCCESS / OWN_SUCCESS / STARGAZERS_SUCCESS
       response,
       type: successType
     })),
-    error => next(actionWith({
+    error => next(actionWith({ // 分发失败action USER_FAILURE / REPO_FAILURE / OWN_FAILURE / STARGAZERS_FAILURE
       type: failureType,
       error: error.message || 'Something bad happened'
     }))

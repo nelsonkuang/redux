@@ -41,10 +41,11 @@ export default class Explore extends Component {
   render() {
     return (
       <div>
-        <p>输入 用户名 或者 github项目全名，然后点击 “确定”:</p>
+        <p>输入 Github用户名 或者 Github项目全名，然后点击 “确定”:</p>
         <input size="45"
                ref={(input) => this.input = input}
                defaultValue={this.props.value}
+               placeholder=" 如本人Github用户名 nelsonkuang "
                onKeyUp={this.handleKeyUp} />
         <button onClick={this.handleGoClick}>
           确定

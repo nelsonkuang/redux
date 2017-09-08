@@ -37,7 +37,7 @@ class App extends Component {
         <b>{errorMessage}</b>
         {' '}
         <button onClick={this.handleDismissClick}>
-          Dismiss
+          忽略
         </button>
       </p>
     )
