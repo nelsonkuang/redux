@@ -19,7 +19,7 @@ let AddTodo = ({ dispatch }) => {
           input = node
         }} />
         <button type="submit">
-          Add Todo
+          添加待办事项
         </button>
       </form>
     </div>

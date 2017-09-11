@@ -1,6 +1,43 @@
+import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { toggleTodo } from '../actions'
+import { loadTodo, toggleTodo } from '../actions'
 import TodoList from '../components/TodoList'
+
+class VisibleTodoList extends React.Component {
+
+  static propTypes = {
+    todos: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
+      text: PropTypes.string.isRequired
+    }).isRequired).isRequired,
+    dispatch: PropTypes.func.isRequired
+  }
+
+  constructor(props) {
+    super(props)
+    this.handleTodoClick = this.handleTodoClick.bind(this)
+  } 
+
+  componentDidMount() {
+    this.props.dispatch(loadTodo())
+  }
+
+  handleTodoClick = id => {
+    this.props.dispatch(toggleTodo(id))
+  }
+
+  render() {
+    const { todos } = this.props
+    return (
+      <TodoList 
+        todos={todos} 
+        onTodoClick={this.handleTodoClick}
+        />
+    );
+  }
+}
 
 const getVisibleTodos = (todos, filter) => {
   switch (filter) {
@@ -16,16 +53,11 @@ const getVisibleTodos = (todos, filter) => {
 }
 
 const mapStateToProps = (state) => ({
-  todos: getVisibleTodos(state.todos, state.visibilityFilter)
+  todos: getVisibleTodos(state.todos.data, state.visibilityFilter),
 })
 
-const mapDispatchToProps = {
-  onTodoClick: toggleTodo
-}
 
-const VisibleTodoList = connect(
+export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(TodoList)
-
-export default VisibleTodoList
+  // mapDispatchToProps
+)(VisibleTodoList)
