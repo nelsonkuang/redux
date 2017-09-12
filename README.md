@@ -1,6 +1,6 @@
 # 自己DIY examples里面的例子进行练手
 
-## 逐步了解redux自定义中间件、redux-saga等等
+### 逐步了解redux自定义中间件、redux-saga等等
 
 [在线Demo](http://www.iampua.com/pui/)   
 
