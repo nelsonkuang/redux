@@ -13,7 +13,7 @@ const Todo = ({ onClick, completed, text, onDelete, created }) => (
     onClick={onDelete}
     className="todos__delete_btn"
   >X</i>
-  <span style={{float: 'right', paddingRight: '20px'}}>{created}</span>
+  <span style={{float: 'right', paddingRight: '20px', color: '#999', fontSize: '12px'}}>{created}</span>
   </li>
 )
 
