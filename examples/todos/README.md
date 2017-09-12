@@ -1,4 +1,8 @@
-# Redux Todos Example
+# Redux todos例子，自定义中间件，数据持久化 Redux Todos Example
+
+[在线 Demo](http://www.iampua.com/pui/todos.html)   
+
+优化界面显示，增加delete操作，使用自定义中间件对数据进行持久化主要是把数据保存到localstorage   
 
 This project template was built with [Create React App](https://github.com/facebookincubator/create-react-app), which provides a simple way to start React projects with no build configuration needed.
 
