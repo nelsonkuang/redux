@@ -17,11 +17,16 @@ export const addTodo = (text) => ({
   type: ADD_TODO,
   types: [ADD_REQUEST, ADD_SUCCESS, ADD_FAILURE],
   id: 'id_' + uid(),
-  text
+  text,
+  created: new Date().toLocaleString()
 })
 
+export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
+export const SHOW_ALL = 'SHOW_ALL'
+export const SHOW_COMPLETED = 'SHOW_COMPLETED'
+export const SHOW_ACTIVE = 'SHOW_ACTIVE'
 export const setVisibilityFilter = (filter) => ({
-  type: 'SET_VISIBILITY_FILTER',
+  type: SET_VISIBILITY_FILTER,
   filter
 })
 
@@ -32,5 +37,15 @@ export const TOGGLE_FAILURE = 'TOGGLE_FAILURE'
 export const toggleTodo = (id) => ({
   type: TOGGLE_TODO,
   types: [TOGGLE_REQUEST, TOGGLE_SUCCESS, TOGGLE_FAILURE],
+  id
+})
+
+export const DELETE_TODO = 'DELETE_TODO'
+export const DELETE_REQUEST = 'DELETE_REQUEST'
+export const DELETE_SUCCESS = 'DELETE_SUCCESS'
+export const DELETE_FAILURE = 'DELETE_FAILURE'
+export const deleteTodo = (id) => ({
+  type: DELETE_TODO,
+  types: [DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE],
   id
 })

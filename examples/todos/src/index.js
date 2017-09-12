@@ -8,10 +8,19 @@ import api from './middleware'
 import App from './components/App'
 import reducer from './reducers'
 
-const store = createStore(
-  reducer,
-  applyMiddleware(thunk, api, createLogger())
-)
+let store = {}
+
+if (process.env.NODE_ENV === 'production') {
+	store = createStore(
+	  reducer,
+	  applyMiddleware(thunk, api)
+	)
+} else {
+	store = createStore(
+	  reducer,
+	  applyMiddleware(thunk, api, createLogger())
+	)
+}
 
 render(
   <Provider store={store}>

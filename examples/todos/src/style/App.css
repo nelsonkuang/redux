@@ -1,0 +1,59 @@
+.todos{
+    padding: 20px;   
+    max-width: 800px; 
+}
+.todos ul, .todos li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.todos__filterlink{
+    background-color: #f0f8ff;
+    padding:10px;
+}
+.todos__addtodo{
+    background-color: #f0f8ff;
+    padding:10px;
+}
+.todos__addtodo input {
+    padding:0 10px;
+    margin:0;
+    border: 1px solid #ccc;
+    height: 25px;
+    line-height: 25px;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+.todos__addtodo button {
+    padding:0 10px;
+    margin:0;
+    height: 25px;
+    line-height: 25px;
+    font-size: 12px;
+    box-sizing: border-box;
+    vertical-align: top; 
+}
+.todos__list{
+    background-color: #fff4d4;
+}
+.todos__list li{
+    cursor: pointer;
+    padding:0 10px;
+    height: 50px;
+    line-height: 50px;
+}
+.todos__list li:nth-child(even){
+    background-color: #fffce2;
+}
+.todos__list li:last-of-type{
+    margin-bottom:0;
+}
+.todos__delete_btn{
+    float: right;
+    color: purple;
+    font-style: normal;
+    padding:0 10px;
+}
+.todos__delete_btn:hover{
+    background-color: yellow;
+}
