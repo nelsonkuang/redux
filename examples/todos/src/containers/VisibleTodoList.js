@@ -70,12 +70,6 @@ class VisibleTodoList extends React.Component {
     })
   }
 
-  handleDeleteOk(id) {
-    if(id){
-      this.props.dispatch(deleteTodo(id))
-    }
-  }
-
   render() {
     const { todos, operating } = this.props
     const { sDialogOptions } = this.state
