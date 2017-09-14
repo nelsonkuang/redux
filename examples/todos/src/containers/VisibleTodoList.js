@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loadTodo, toggleTodo, SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE, deleteTodo } from '../actions'
 import TodoList from '../components/TodoList'
+import SDialog, {defaultProps as defaultSDialogOptions} from '../components/SDialog'
 
 class VisibleTodoList extends React.Component {
 
@@ -20,24 +21,66 @@ class VisibleTodoList extends React.Component {
     super(props)
     this.handleTodoClick = this.handleTodoClick.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleDeleteOk = this.handleDeleteOk.bind(this)
+    this.showSDialog = this.showSDialog.bind(this)
+    this.hideSDialog = this.hideSDialog.bind(this)
+    this.state = {
+      sDialogOptions: defaultSDialogOptions
+    }    
   } 
 
   componentDidMount() {
     this.props.dispatch(loadTodo())
   }
 
-  handleTodoClick = id => {
+  handleTodoClick(id) {
     this.props.dispatch(toggleTodo(id))
   }
 
-  handleDelete = id => {
-    this.props.dispatch(deleteTodo(id))
+  handleDelete(id) {
+    this.showSDialog({
+      content: '确定要删除此项目?',
+      okBtn: true,
+      cancelBtn: true,
+      onOk: () => {
+        this.props.dispatch(deleteTodo(id))
+        this.hideSDialog()
+      },
+      onCancel: () => this.hideSDialog(),
+      onDestroy: () => this.hideSDialog(),      
+    })
+  }
+
+  showSDialog(options) {
+    this.setState({
+      sDialogOptions: {
+        ...defaultSDialogOptions,
+        show: true,
+        ...options
+      }
+    })
+  }
+
+  hideSDialog() {
+    this.setState({
+      sDialogOptions: {
+        ...defaultSDialogOptions,
+        show: false
+      }
+    })
+  }
+
+  handleDeleteOk(id) {
+    if(id){
+      this.props.dispatch(deleteTodo(id))
+    }
   }
 
   render() {
     const { todos, operating } = this.props
+    const { sDialogOptions } = this.state
     let operatingTips =(
-      <div style={{textAlign:'center', padding:'10px 0', display: operating ? 'block' : 'none'}}>
+      <div style={{textAlign:'center', padding:'10px 0', fontSize:'16px', display: operating ? 'block' : 'none'}}>
         处理中...
       </div>
       )
@@ -49,6 +92,7 @@ class VisibleTodoList extends React.Component {
           onDelete={this.handleDelete}
           />
         {operatingTips}
+        <SDialog {...sDialogOptions} />
       </div>
     );
   }

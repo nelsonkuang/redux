@@ -10,11 +10,20 @@
 .todos__filterlink{
     background-color: #f0f8ff;
     padding:10px;
+    font-size: 16px;
+}
+.todos__filterlink a{
+    text-decoration: underline;
 }
 .todos__addtodo{
     background-color: #f0f8ff;
     padding:10px;
 }
+
+.todos__addtodo form{
+    height: 30px;
+}
+
 .todos__addtodo input {
     padding:0 10px;
     margin:0;
@@ -23,6 +32,7 @@
     line-height: 25px;
     box-sizing: border-box;
     vertical-align: top;
+    font-size: 12px;
 }
 .todos__addtodo button {
     padding:0 10px;
@@ -40,6 +50,7 @@
     cursor: pointer;
     padding:0 10px;
     line-height: 50px;
+    font-size: 16px;
 }
 .todos__list li:after{
     content: '';
