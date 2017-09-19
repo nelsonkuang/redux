@@ -24,7 +24,8 @@ export const PAGELIMIT = 20
  * 调用window.fetch异步获取数据，浏览器兼容需要引入bebel-polyfill
  *
  * @param {String} topic
- * @returns {Array} 根据topic返回相应的贴子posts.
+ * @param {String} page
+ * @returns {Array} 根据topic及页号page返回相应的贴子posts.
  */
 export function fetchPostsApi(topic, page) {
     return fetch(`https://cnodejs.org/api/v1/topics?tab=${topic}&page=${page}&limit=${PAGELIMIT}`)
@@ -37,6 +38,7 @@ export function fetchPostsApi(topic, page) {
  * 获取数据生成器
  *
  * @param {String} topic
+ * @param {String} page
  */
 export function* fetchPosts(topic, page) {
   yield put( actions.requestPosts(topic, page) )
