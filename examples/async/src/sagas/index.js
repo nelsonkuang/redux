@@ -13,8 +13,8 @@ export function* watchAndLog() {
     const action = yield take('*')
     const state = yield select()
 
-    console.log('action', action)
-    console.log('state after', state)
+    console.log('%cAction - ' + action.type, 'color:blue;font-size:18px;', action)
+    console.log('%cState After: ', 'color:green;font-size:16px;', state)
   }
 }
 
@@ -30,6 +30,7 @@ export function fetchPostsApi(topic, page) {
     return fetch(`https://cnodejs.org/api/v1/topics?tab=${topic}&page=${page}&limit=${PAGELIMIT}`)
             .then(response => response.json() )
             .then(json => json.data.map(child => child) )
+            .catch(error => console.log(error))
 }
 
 /**
