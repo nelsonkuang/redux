@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { selectTopic, invalidateTopic } from '../actions'
+import { selectTopic, invalidateTopic, loadMoreByTopic } from '../actions'
 import Picker from '../components/Picker'
 import Posts from '../components/Posts'
 
@@ -10,6 +10,7 @@ class App extends Component {
     selectedTopic: PropTypes.string.isRequired,
     posts: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,
+    currentPage: PropTypes.number.isRequired,
     lastUpdated: PropTypes.number,
     dispatch: PropTypes.func.isRequired
   }
@@ -18,6 +19,7 @@ class App extends Component {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleRefreshClick = this.handleRefreshClick.bind(this)
+    this.handleLoadMore = this.handleLoadMore.bind(this)
   }
 
   handleChange = nextTopic => {
@@ -28,6 +30,11 @@ class App extends Component {
     e.preventDefault()
     const { dispatch, selectedTopic } = this.props
     dispatch(invalidateTopic(selectedTopic))
+  }
+
+  handleLoadMore() {
+    const { dispatch, selectedTopic, currentPage } = this.props
+    dispatch(loadMoreByTopic(selectedTopic, currentPage + 1))
   }
 
   render() {
@@ -60,6 +67,11 @@ class App extends Component {
               <Posts posts={posts} />
             </div>
         }
+        <button style={{ fontSize: '150%', display: 'block', float: 'left', clear: 'both' }}
+                onClick={this.handleLoadMore}
+                disabled={isFetching}>
+          {isFetching ? '加载中...' : '加载更多'}
+        </button>
       </div>
     )
   }
@@ -70,7 +82,8 @@ const mapStateToProps = state => {
   const {
     isFetching,
     lastUpdated,
-    items: posts
+    items: posts,
+    currentPage
   } = postsByTopic[selectedTopic] || {
     isFetching: true,
     items: []
@@ -79,6 +92,7 @@ const mapStateToProps = state => {
   return {
     selectedTopic,
     posts,
+    currentPage,
     isFetching,
     lastUpdated
   }

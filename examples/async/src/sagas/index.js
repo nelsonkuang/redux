@@ -17,14 +17,17 @@ export function* watchAndLog() {
     console.log('state after', state)
   }
 }
+
+export const FIRSTPAGE = 1
+export const PAGELIMIT = 20
 /**
  * 调用window.fetch异步获取数据，浏览器兼容需要引入bebel-polyfill
  *
  * @param {String} topic
  * @returns {Array} 根据topic返回相应的贴子posts.
  */
-export function fetchPostsApi(topic) {
-    return fetch(`https://cnodejs.org/api/v1/topics?tab=${topic}`)
+export function fetchPostsApi(topic, page) {
+    return fetch(`https://cnodejs.org/api/v1/topics?tab=${topic}&page=${page}&limit=${PAGELIMIT}`)
             .then(response => response.json() )
             .then(json => json.data.map(child => child) )
 }
@@ -34,10 +37,10 @@ export function fetchPostsApi(topic) {
  *
  * @param {String} topic
  */
-export function* fetchPosts(topic) {
-  yield put( actions.requestPosts(topic) )
-  const posts = yield call(fetchPostsApi, topic)
-  yield put( actions.receivePosts(topic, posts) )
+export function* fetchPosts(topic, page) {
+  yield put( actions.requestPosts(topic, page) )
+  const posts = yield call(fetchPostsApi, topic, page)
+  yield put( actions.receivePosts(topic, posts, page) )
 }
 
 /**
@@ -47,7 +50,18 @@ export function* fetchPosts(topic) {
 export function* invalidateTopic() {
   while (true) {
     const {topic} = yield take(actions.INVALIDATE_TOPIC)
-    yield call( fetchPosts, topic )
+    yield call( fetchPosts, topic, FIRSTPAGE)
+  }
+}
+
+/**
+ * 加载更多数据生成器
+ *
+ */
+export function* loadMoreByTopic() {
+  while (true) {
+    const {topic, page} = yield take(actions.LOADMORE_POSTS)
+    yield call( fetchPosts, topic, page)
   }
 }
 
@@ -63,7 +77,7 @@ export function* nextTopicChange() {
     const newTopic = yield select(selectedTopicSelector)
     const postsByTopic = yield select(postsByTopicSelector)
     if(prevTopic !== newTopic && !postsByTopic[newTopic])
-      yield fork(fetchPosts, newTopic)
+      yield fork(fetchPosts, newTopic, FIRSTPAGE)
   }
 }
 
@@ -73,7 +87,7 @@ export function* nextTopicChange() {
  */
 export function* startup() {
   const selectedTopic = yield select(selectedTopicSelector)
-  yield fork(fetchPosts, selectedTopic)
+  yield fork(fetchPosts, selectedTopic, FIRSTPAGE)
 }
 
 export default function* root() {
@@ -81,4 +95,5 @@ export default function* root() {
   yield fork(startup)
   yield fork(nextTopicChange)
   yield fork(invalidateTopic)
+  yield fork(loadMoreByTopic)
 }
