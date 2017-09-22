@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 const propTypes = {
   show: PropTypes.bool,
   skin: PropTypes.string,
-  content: PropTypes.string,
+  children: PropTypes.node,
   width: PropTypes.number,
   okBtn: PropTypes.bool,
   okBtnText: PropTypes.string,
@@ -13,6 +13,7 @@ const propTypes = {
   cancelBtnText: PropTypes.string,
   onOk: PropTypes.func,
   onCancel: PropTypes.func,
+  onCreated: PropTypes.func, 
   onDestroy: PropTypes.func,
   autoTime: PropTypes.number,
 }
@@ -20,7 +21,6 @@ const propTypes = {
 export const defaultProps = {
   skin: 'block',
   show: false,
-  content: '',
   width: 250,
   okBtn: false,
   cancelBtn: false,
@@ -28,11 +28,12 @@ export const defaultProps = {
   cancelBtnText: '取消',
   onOk: function(){},
   onCancel: function(){},
+  onCreated: function(){},
   onDestroy: function(){},
   autoTime: 2000,
 }
 
-class SDialog extends Component {
+class Dialog extends Component {
   constructor(props) {
     super(props)
     this.onOk = this.onOk.bind(this)
@@ -46,6 +47,7 @@ class SDialog extends Component {
       okBtn,
       cancelBtn,
       autoTime,
+      onCreated,
       onDestroy
     } = this.props;
     if (show) {
@@ -53,10 +55,10 @@ class SDialog extends Component {
       if(!okBtn || !cancelBtn){
         setTimeout(()=> {
           this.destroy()
-          if (onDestroy) {
-            onDestroy()
-          }
+          onDestroy && onDestroy()
         }, autoTime)
+      } else {
+        onCreated && onCreated()
       }
     }
   }
@@ -67,46 +69,41 @@ class SDialog extends Component {
       okBtn,
       cancelBtn,
       autoTime,
-      onDestroy
+      onDestroy,
+      onCreated
     } = this.props;
     if (show !== prevProps.show && show) {
       this.open()
       if(!okBtn && !cancelBtn){
         setTimeout(()=> {
           this.destroy()
-          if (onDestroy) {
-            onDestroy()
-          }
+          onDestroy && onDestroy()
         }, autoTime)
+      } else {
+        onCreated && onCreated()
       }
     }
   }
 
   componentWillUnmount() {
     this.destroy()
-    if (this.props.onDestroy) {
-      this.props.onDestroy()
-    }
+    this.props.onDestroy && this.props.onDestroy()
   }
 
   onOk() {
-    if (this.props.onOk) {
-      this.props.onOk()
-    }
+    this.props.onOk && this.props.onOk()
     this.destroy()
   }
 
   onCancel() {
-    if (this.props.onCancel) {
-      this.props.onCancel()
-    }
+    this.props.onCancel && this.props.onCancel()
     this.destroy()
   }
 
   destroy() {
     if (this._el) {
-      this._el.querySelector('.sdialog__mask').classList.add('maskFadeOut')
-      this._el.querySelector('.sdialog__wrapper').classList.add('wrapperFadeOutUp')
+      this._el.querySelector('.dialog__mask').classList.add('maskFadeOut')
+      this._el.querySelector('.dialog__wrapper').classList.add('wrapperFadeOutUp')
       setTimeout(()=>{
         ReactDOM.unmountComponentAtNode(this._el)
         document.body.removeChild(this._el)
@@ -120,34 +117,33 @@ class SDialog extends Component {
     document.body.appendChild(this._el)
     ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
-      this.renderSDialog(),
+      this.renderDialog(),
       this._el
     );
   }
 
-  renderSDialog() {
+  renderDialog() {
     const {
       skin,
-      content,
       width,
       okBtn,
       okBtnText,
+      children,
       cancelBtn,
       cancelBtnText
     } = this.props;
 
     return (
-      <div className="sdialog" key="sdialog">
-        <div className="sdialog__mask maskFadeIn sdialog_animated" style={{height: (document.body.offsetHeight > window.screen.height ? document.body.offsetHeight : window.screen.height) + 'px'}} />
-        <div className={'sdialog__wrapper wrapperFadeInDown sdialog_animated sdialog__wrapper--skin-' + skin} style={{left:'50%', top: (window.screen.height/2 - 60) + 'px', width: width + 'px', marginLeft: (width*(-1)/2) + 'px'}} >
-          <div className="sdialog__content"
-            dangerouslySetInnerHTML={{
-              __html: content
-          }} />
+      <div className="dialog" key="dialog">
+        <div className="dialog__mask maskFadeIn dialog_animated" style={{height: (document.body.offsetHeight > window.screen.height ? document.body.offsetHeight : window.screen.height) + 'px'}} />
+        <div className={'dialog__wrapper wrapperFadeInDown dialog_animated dialog__wrapper--skin-' + skin} style={{left:'50%', top: (window.screen.height/2 - 100) + 'px', width: width + 'px', marginLeft: (width*(-1)/2) + 'px'}} >
+          <div className="dialog__content">
+            {children}
+          </div>
           {(okBtn || cancelBtn) && (
-            <div className="sdialog__btns">
-              {okBtn && (<button className="sdialog__btn sdialog__btn--ok" onClick={this.onOk}>{okBtnText}</button>)}
-              {cancelBtn && <button className="sdialog__btn sdialog__btn--cancel" onClick={this.onCancel}>{cancelBtnText}</button>}
+            <div className="dialog__btns">
+              {okBtn && (<button className="dialog__btn dialog__btn--ok" onClick={this.onOk}>{okBtnText}</button>)}
+              {cancelBtn && <button className="dialog__btn dialog__btn--cancel" onClick={this.onCancel}>{cancelBtnText}</button>}
             </div>
           )}
         </div>
@@ -161,7 +157,7 @@ class SDialog extends Component {
   }
 }
 
-SDialog.propTypes = propTypes
-SDialog.defaultProps = defaultProps
+Dialog.propTypes = propTypes
+Dialog.defaultProps = defaultProps
 
-export default SDialog
+export default Dialog

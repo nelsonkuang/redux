@@ -1,7 +1,10 @@
-import { LOAD_REQUEST, LOAD_FAILURE, LOAD_SUCCESS, 
+import { 
+  LOAD_REQUEST, LOAD_FAILURE, LOAD_SUCCESS, 
   ADD_REQUEST, ADD_SUCCESS, ADD_FAILURE, 
   TOGGLE_REQUEST, TOGGLE_SUCCESS, TOGGLE_FAILURE, 
-  DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE} from '../actions'
+  DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE,
+  EDIT_REQUEST, EDIT_SUCCESS, EDIT_FAILURE
+} from '../actions'
 
 const todos = (state = {data:[]}, action) => {
   switch (action.type) {
@@ -9,6 +12,7 @@ const todos = (state = {data:[]}, action) => {
     case ADD_REQUEST:    
     case TOGGLE_REQUEST:
     case DELETE_REQUEST:
+    case EDIT_REQUEST:
       return {
         data: [...state.data],
         operating: true
@@ -17,6 +21,7 @@ const todos = (state = {data:[]}, action) => {
     case TOGGLE_FAILURE:      
     case ADD_FAILURE:
     case DELETE_FAILURE:
+    case EDIT_FAILURE:
       return {
         data: [...state.data],
         operating: false,
@@ -42,6 +47,15 @@ const todos = (state = {data:[]}, action) => {
         ],          
         operating: false
       }  
+
+    case EDIT_SUCCESS:
+      return {
+        data: state.data.map(todo =>
+          (todo.id === action.id) 
+          ? {...todo, completed: action.completed, text: action.text}
+          : todo),
+        operating: false
+      }
 
     case TOGGLE_SUCCESS:
       return {

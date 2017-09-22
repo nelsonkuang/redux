@@ -1,5 +1,5 @@
 import * as localStore from 'store'
-import { LOAD_TODO, ADD_TODO, TOGGLE_TODO, DELETE_TODO } from '../actions'
+import { LOAD_TODO, ADD_TODO, TOGGLE_TODO, DELETE_TODO, EDIT_TODO } from '../actions'
 
 const MYTODOS = 'MYTODOS'
 const TIMEOUT = 300
@@ -36,6 +36,14 @@ const callApi = (action) => {
                         ))
                         setTimeout(function() {
                             resolve({ id: action.id })
+                        }, TIMEOUT);
+                        break
+                    case EDIT_TODO:
+                        localStore.set(MYTODOS, todos.map(todo =>
+                            (todo.id === action.todo.id) ? {...todo, completed: action.todo.completed, text: action.todo.text } : todo
+                        ))
+                        setTimeout(function() {
+                            resolve(action.todo)
                         }, TIMEOUT);
                         break
                     case DELETE_TODO:

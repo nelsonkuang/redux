@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Todo from './Todo'
 
-const TodoList = ({ todos, onTodoClick, onDelete }) => (
+const TodoList = ({ todos, onTodoClick, onEdit, onDelete }) => (
   <ul className="todos__list">
     {todos.map(todo =>
       <Todo
@@ -10,9 +10,15 @@ const TodoList = ({ todos, onTodoClick, onDelete }) => (
         {...todo}
         onClick={() => onTodoClick(todo.id)}
         onDelete={(e) => {
-            e.stopPropagation();
-            e.nativeEvent.stopImmediatePropagation();
+            e.stopPropagation()
+            e.nativeEvent.stopImmediatePropagation()
             onDelete(todo.id)
+          }
+        }
+        onEdit={(e) => {
+            e.stopPropagation()
+            e.nativeEvent.stopImmediatePropagation()
+            onEdit(todo)
           }
         }
       />
@@ -24,9 +30,11 @@ TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
-    text: PropTypes.string.isRequired
+    text: PropTypes.string.isRequired,
+    created: PropTypes.string
   }).isRequired).isRequired,
   onTodoClick: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired
 }
 

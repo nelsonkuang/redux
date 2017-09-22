@@ -19,7 +19,6 @@
   -webkit-transform: scale(1, 1);
   border-radius: 3px;
   -webkit-border-radius: 3px;
-  max-width: 60%;
 }
 .sdialog__wrapper--skin-green {
   background: rgba(96, 195, 171, 0.8);
@@ -59,4 +58,76 @@
 .sdialog__btns .sdialog__btn--ok {
   color: #ff8903;
   border-right: 1px solid #cdc7c7;
+}
+@keyframes maskFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.6;
+  }
+}
+
+.maskFadeIn {
+  animation-name: maskFadeIn;
+}
+
+@keyframes maskFadeOut {
+  from {
+    opacity: 0.6;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.maskFadeOut {
+  animation-name: maskFadeOut;
+}
+
+@keyframes wrapperFadeInDown {
+  from {
+    opacity: 0;
+    transform-origin: center;
+    transform: translate3d(0, -100%, 0) scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform-origin: center;    
+    transform: none;
+  }
+}
+
+.wrapperFadeInDown {
+  animation-name: wrapperFadeInDown;
+}
+
+@keyframes wrapperFadeOutUp {
+  from {
+    opacity: 1;
+    transform-origin: center;   
+    transform: none;
+  }
+
+  to {
+    opacity: 0;
+    transform-origin: center;   
+    transform: translate3d(0, -100%, 0) scale(0);
+  }
+}
+
+.wrapperFadeOutUp {
+  animation-name: wrapperFadeOutUp;
+}
+
+.sdialog_animated {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+
+.sdialog_animated.infinite {
+  animation-iteration-count: infinite;
 }

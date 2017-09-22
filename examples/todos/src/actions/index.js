@@ -40,6 +40,17 @@ export const toggleTodo = (id) => ({
   id
 })
 
+export const EDIT_TODO = 'EDIT_TODO'
+export const EDIT_REQUEST = 'EDIT_REQUEST'
+export const EDIT_SUCCESS = 'EDIT_SUCCESS'
+export const EDIT_FAILURE = 'EDIT_FAILURE'
+export const editTodo = (todo) => ({
+  type: EDIT_TODO,
+  types: [EDIT_REQUEST, EDIT_SUCCESS, EDIT_FAILURE],
+  todo
+})
+
+
 export const DELETE_TODO = 'DELETE_TODO'
 export const DELETE_REQUEST = 'DELETE_REQUEST'
 export const DELETE_SUCCESS = 'DELETE_SUCCESS'

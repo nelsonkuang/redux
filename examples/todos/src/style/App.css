@@ -63,12 +63,48 @@
 .todos__list li:last-of-type{
     margin-bottom:0;
 }
-.todos__delete_btn{
+.todos__edit_btn{
     float: right;
     color: purple;
     font-style: normal;
     padding:0 10px;
 }
+.todos__edit_btn:hover{
+    background-color: orange;
+    color: blue;
+}
+.todos__delete_btn{
+    float: right;
+    color: green;
+    font-style: normal;
+    padding:0 10px;
+}
 .todos__delete_btn:hover{
     background-color: yellow;
+    color: purple;
+}
+
+.todo__edit_input label, .todo__edit_checkbox label {
+    display: block;
+    text-align: left;
+}
+
+.todo__edit_input textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #333;
+    font-size: 14px;
+}
+.todo__edit_checkbox input[type="checkbox"] {
+    -webkit-appearance: checkbox;
+}
+
+.todo__edit_checkbox label {
+    padding-top: 10px;
+    color: #666;
+    font-size: 12px;
 }
